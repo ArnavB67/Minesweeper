@@ -1,1 +1,2 @@
 print("minesweeper")
+print("test")
