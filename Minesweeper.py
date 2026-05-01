@@ -23,7 +23,10 @@ def start():
             btn.touch=0
             btn.grid(row=row, column=col)
             buttons[(row, col)] = btn
+            btn.bind("<Button-3>", lambda event, r=row, c=col: on_right_click(event, r, c))
+
     btn=tk.Button(root, text="Restart", command=start)
+
     btn.grid(row=8, column=1, columnspan=4)
     btn=tk.Button(root, text="Exit", command=root.destroy)
     btn.grid(row=8, column=2, columnspan=4)
@@ -78,51 +81,80 @@ def on_button_click(row, col):
     if turn_count == 1:
         random_bomb()
         AssignNumbers()
+        if (row, col) in bomb_coords:
+            start()
+            buttons[(row, col)].config(bg="green",text=str(buttons[(row, col)].touch))
+            turn_count = 2
 
 
     if (row, col) not in bomb_coords:
         buttons[(row, col)].config(bg="green",text=str(buttons[(row, col)].touch))
-        if buttons[(row, col)].touch == 0:
+        def reveal_adjacent(row, col):
             try:
                 if buttons[(row+1,col)].touch == 0:
                     buttons[(row+1, col)].config(bg="green",text="0")
+                elif buttons[(row+1,col)].touch > 0:
+                    buttons[(row+1, col)].config(bg="green",text=str(buttons[(row+1, col)].touch))
             except KeyError:
                 pass
             try:
                 if buttons[(row-1,col)].touch == 0:
                     buttons[(row-1, col)].config(bg="green",text="0")
+                elif buttons[(row-1,col)].touch > 0:
+                    buttons[(row-1, col)].config(bg="green",text=str(buttons[(row-1, col)].touch))
             except KeyError:
                 pass
             try:
                 if buttons[(row,col+1)].touch == 0:
                     buttons[(row, col+1)].config(bg="green",text="0")
+                elif buttons[(row,col+1)].touch > 0:
+                    buttons[(row, col+1)].config(bg="green",text=str(buttons[(row, col+1)].touch))
             except KeyError:
                 pass
             try:
                 if buttons[(row,col-1)].touch == 0:
                     buttons[(row, col-1)].config(bg="green",text="0")
+                elif buttons[(row,col-1)].touch > 0:
+                    buttons[(row, col-1)].config(bg="green",text=str(buttons[(row, col-1)].touch))
             except KeyError:
                 pass
             try:
                 if buttons[(row+1,col+1)].touch == 0:
                     buttons[(row+1, col+1)].config(bg="green",text="0")
+                elif buttons[(row+1,col+1)].touch > 0:
+                    buttons[(row+1, col+1)].config(bg="green",text=str(buttons[(row+1, col+1)].touch))
             except KeyError:
                 pass
             try:
                 if buttons[(row-1,col-1)].touch == 0:
                     buttons[(row-1, col-1)].config(bg="green",text="0")
+                elif buttons[(row-1,col-1)].touch > 0:
+                    buttons[(row-1, col-1)].config(bg="green",text=str(buttons[(row-1, col-1)].touch))
             except KeyError:
                 pass
             try:
                 if buttons[(row+1,col-1)].touch == 0:
                     buttons[(row+1, col-1)].config(bg="green",text="0")
+                elif buttons[(row+1,col-1)].touch > 0:
+                    buttons[(row+1, col-1)].config(bg="green",text=str(buttons[(row+1, col-1)].touch))
             except KeyError:
                 pass
             try:
                 if buttons[(row-1,col+1)].touch == 0:
                     buttons[(row-1, col+1)].config(bg="green",text="0")
+                elif buttons[(row-1,col+1)].touch > 0:
+                    buttons[(row-1, col+1)].config(bg="green",text=str(buttons[(row-1, col+1)].touch))
             except KeyError:
                 pass
+        if buttons[(row, col)].touch == 0:
+            reveal_adjacent(row, col)
+
+def on_right_click(event, row, col):
+    button = buttons[(row, col)]
+    if button.cget("text") == "":
+        button.config(text="🚩")
+    elif button.cget("text") == "🚩":
+        button.config(text="")
 
 
 start()
