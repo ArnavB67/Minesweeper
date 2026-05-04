@@ -6,4 +6,4 @@ it uses random module to assign bombs to random location and then as per mineswe
 <img width="476" height="481" alt="image" src="https://github.com/user-attachments/assets/9f3b4a81-a173-4e43-8dfe-3998cde15ee4" />
 
 
-ai was used to understand how to make buttons in tkinter,get to know hot to access properties of a button
+ai was used to understand how to make buttons in tkinter,get to know how to access properties of a button
