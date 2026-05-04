@@ -4,6 +4,8 @@ it uses random module to assign bombs to random location and then as per mineswe
 
 <img width="478" height="483" alt="minesweeper" src="https://github.com/user-attachments/assets/2a447698-7d0e-4d03-8668-02c47f32d4dd" />
 <img width="476" height="481" alt="image" src="https://github.com/user-attachments/assets/9f3b4a81-a173-4e43-8dfe-3998cde15ee4" />
+<img width="480" height="487" alt="image" src="https://github.com/user-attachments/assets/0d88d26d-2052-4b97-89ca-e0ecf98912d3" />
+<img width="483" height="480" alt="image" src="https://github.com/user-attachments/assets/3cff296e-90a4-4e6e-b067-46e404462e30" />
 
 
-ai was used to understand how to make buttons in tkinter,get to know how to access properties of a button
+ai was used to understand how to make buttons in tkinter,get to know how to access properties of a button,some help regarding syntax errors while debugging.
