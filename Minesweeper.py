@@ -1,13 +1,18 @@
 import tkinter as tk
 import random
-import time
 
 root=tk.Tk()
+
 root.title("Minesweeper")
-buttons={}
-btn_list=[]
+
 def start():
     global turn_count
+    global buttons
+    global btn_list
+    global bomb_coords
+    bomb_coords=[]
+    buttons={}
+    btn_list=[]
     turn_count=0
     for row in range(8):
         for col in range(8):
@@ -33,14 +38,13 @@ def start():
 
 def random_bomb(exclude=None):
     global bomb_coords
-    bomb_coords = []
 
     count=0
     while count<15:
         BombXcoord=random.randint(0,7)
         BombYcoord=random.randint(0,7)
         
-        if (BombXcoord, BombYcoord) != exclude and (BombXcoord, BombYcoord) not in bomb_coords:
+        if (BombXcoord, BombYcoord) not in exclude and (BombXcoord, BombYcoord) not in bomb_coords:
             bomb_coords.append((BombXcoord, BombYcoord))
             count+=1
     
@@ -88,7 +92,7 @@ def on_button_click(row, col):
     global turn_count
     turn_count += 1
     if turn_count == 1:
-        random_bomb(exclude=(row, col))
+        random_bomb(exclude=[(row, col),(row+1, col),(row-1, col),(row, col+1),(row, col-1),(row+1, col+1),(row-1, col-1),(row+1, col-1),(row-1, col+1),(row+2,col),(row-2,col),(row,col+2),(row,col-2)])
         AssignNumbers()
 
     if (row, col) in bomb_coords:
@@ -100,11 +104,7 @@ def on_button_click(row, col):
         global btn_list
         if (row, col) in btn_list:
             btn_list.remove((row, col))
-        if len(btn_list) == 0:
-            for row in range(8):
-                for col in range(8):
-                    buttons[(row, col)].config(text='YOU WIN',bg="green")
-        
+
         def reveal_adjacent(row, col):
             try:
                 if buttons[(row+1,col)].touch == 0 and (row+1, col) not in bomb_coords:
@@ -196,7 +196,12 @@ def on_button_click(row, col):
                 pass
         if buttons[(row, col)].touch == 0:
             reveal_adjacent(row, col)
-            btn_list.remove((row, col))
+
+        if len(btn_list) == 0:
+            for row in range(8):
+                for col in range(8):
+                    buttons[(row, col)].config(text='YOU WIN',bg="green")
+        
 
 def on_right_click(event, row, col):
     button = buttons[(row, col)]
